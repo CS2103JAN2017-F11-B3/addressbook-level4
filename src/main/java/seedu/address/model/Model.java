@@ -7,6 +7,9 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.UniquePersonList.DuplicatePersonException;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.UniqueTaskList;
 
 /**
  * The API of the Model component.
@@ -23,6 +26,9 @@ public interface Model {
 
     /** Adds the given person */
     void addPerson(Person person) throws UniquePersonList.DuplicatePersonException;
+    
+    ///////////////
+    void addTask(Task task) throws UniqueTaskList.DuplicateTaskException;
 
     /**
      * Updates the person located at {@code filteredPersonListIndex} with {@code editedPerson}.
@@ -42,5 +48,10 @@ public interface Model {
 
     /** Updates the filter of the filtered person list to filter by the given keywords*/
     void updateFilteredPersonList(Set<String> keywords);
-
+    
+    ///////////////
+	UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
+	
+	////////////////
+	void deleteTask(ReadOnlyTask target)throws UniqueTaskList.TaskNotFoundException;
 }

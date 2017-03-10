@@ -16,6 +16,9 @@ import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.UniquePersonList.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.UniqueTaskList;
 
 /**
  * Wraps all data at the address-book level
@@ -25,6 +28,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    ///////////
+    private final UniqueTaskList tasks;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -36,6 +41,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        tasks = new UniqueTaskList();
     }
 
     public AddressBook() {}
@@ -87,6 +93,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(p);
         persons.add(p);
     }
+    
+    //////////////
+    public void addTask(Task t) throws UniqueTaskList.DuplicateTaskException {
+        syncMasterTagListWith(t);
+        tasks.add(t);
+    }
 
     /**
      * Updates the person in the list at position {@code index} with {@code editedReadOnlyPerson}.
@@ -129,6 +141,22 @@ public class AddressBook implements ReadOnlyAddressBook {
         person.setTags(new UniqueTagList(correctTagReferences));
     }
 
+    ////////////////
+    private void syncMasterTagListWith(Task task) {
+        final UniqueTagList taskTags = task.getTags();
+        tags.mergeFrom(taskTags);
+
+        // Create map with values = tag object references in the master list
+        // used for checking person tag references
+        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
+        tags.forEach(tag -> masterTagObjects.put(tag, tag));
+
+        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
+        final Set<Tag> correctTagReferences = new HashSet<>();
+        taskTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        task.setTags(new UniqueTagList(correctTagReferences));
+    }
+
     /**
      * Ensures that every tag in these persons:
      *  - exists in the master list {@link #tags}
@@ -146,6 +174,15 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new UniquePersonList.PersonNotFoundException();
         }
     }
+    
+    //////////////////////
+    public boolean removeTask(ReadOnlyTask key) throws UniqueTaskList.TaskNotFoundException {
+    	if (tasks.remove(key)) {
+            return true;
+        } else {
+            throw new UniqueTaskList.TaskNotFoundException();
+        }		
+	}
 
 //// tag-level operations
 

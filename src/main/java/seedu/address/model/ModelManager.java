@@ -14,6 +14,10 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.UniquePersonList.PersonNotFoundException;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.UniqueTaskList;
+import seedu.address.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -63,10 +67,25 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
+    
+    ////////////////
+    @Override
+	public void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
+    	addressBook.removeTask(target);
+        indicateAddressBookChanged();		
+	}
 
     @Override
     public synchronized void addPerson(Person person) throws UniquePersonList.DuplicatePersonException {
         addressBook.addPerson(person);
+        updateFilteredListToShowAll();
+        indicateAddressBookChanged();
+    }
+    
+    ////////////////
+    @Override
+    public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
+        addressBook.addTask(task);
         updateFilteredListToShowAll();
         indicateAddressBookChanged();
     }
@@ -154,4 +173,9 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+	@Override
+	public UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
