@@ -42,6 +42,10 @@ public interface Model {
 
     /** Updates the filter of the filtered person list to filter by the given keywords*/
     void updateFilteredPersonList(Set<String> keywords);
+    
+    //@@author A0164889E
+    /** Updates the filter of the filtered person list to filter by the given keywords for GroupCommand*/
+    void updateFilteredPersonListGroup(Set<String> keywords);
 
     //@@author A0163848R
 

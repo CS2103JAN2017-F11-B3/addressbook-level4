@@ -156,6 +156,17 @@ public class ModelManager extends ComponentManager implements Model {
     private void updateFilteredPersonList(Expression expression) {
         filteredPersons.setPredicate(expression::satisfies);
     }
+    
+    //@@author A0164889E
+    @Override
+    public void updateFilteredPersonListGroup(Set<String> keywords) {
+        updateFilteredPersonListGroup(new PredicateExpression(new GroupQualifier(keywords)));
+    }
+
+    private void updateFilteredPersonListGroup(Expression expression) {
+        filteredPersons.setPredicate(expression::satisfies);
+    }
+    //@@author
 
     //========== Inner classes/interfaces used for filtering =================================================
 
@@ -208,5 +219,28 @@ public class ModelManager extends ComponentManager implements Model {
             return "name=" + String.join(", ", nameKeyWords);
         }
     }
+    
+    //@@author A0164889E
+    private class GroupQualifier implements Qualifier {
+        private Set<String> groupKeyWords;
+
+        GroupQualifier(Set<String> groupKeyWords) {
+            this.groupKeyWords = groupKeyWords;
+        }
+
+        @Override
+        public boolean run(ReadOnlyPerson person) {
+            return groupKeyWords.stream()
+                    .filter(keyword -> StringUtil.containsWordIgnoreCase(person.getGroup().value, keyword))
+                    .findAny()
+                    .isPresent();
+        }
+
+        @Override
+        public String toString() {
+            return "name=" + String.join(", ", groupKeyWords);
+        }
+    }
+    //@@author
 
 }

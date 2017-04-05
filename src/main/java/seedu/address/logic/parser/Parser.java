@@ -13,6 +13,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.GroupCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.IncorrectCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -88,6 +89,10 @@ public class Parser {
         case RedoCommand.COMMAND_WORD:
             return new RedoCommandParser().parse(arguments);
         //@@author
+
+        //@@author A0164889E
+        case GroupCommand.COMMAND_WORD:
+            return new GroupCommandParser().parse(arguments);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
