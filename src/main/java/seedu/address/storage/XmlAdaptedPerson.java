@@ -58,9 +58,6 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
-        
-        date += " ";
-        sdate += " ";
     }
 
     /**
@@ -74,25 +71,8 @@ public class XmlAdaptedPerson {
             personTags.add(tag.toModelType());
         }
         final Name name = new Name(this.name);
-        
-        //@@author A0164889E
-        final Date date;
-        if (this.date != " ") {
-            date = new Date(this.date);
-        }else {
-            date = new Date("null");
-        }
-        //date = new Date(this.date);
-        
-        final StartDate sdate;
-        //sdate = new StartDate(this.sdate);
-        if (this.sdate != " ") {
-            sdate = new StartDate(this.sdate);
-        }else {
-            sdate = new StartDate("null");
-        }
-        //@@author
-        
+        final Date date = new Date(this.date);
+        final StartDate sdate = new StartDate(this.sdate);
         final Email email = new Email(this.email);
         final Group group = new Group(this.group);
         final UniqueTagList tags = new UniqueTagList(personTags);

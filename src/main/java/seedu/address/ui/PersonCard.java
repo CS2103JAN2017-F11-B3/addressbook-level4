@@ -32,21 +32,20 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         name.setText(person.getName().fullName);
         id.setText(displayedIndex + ". ");
-        
-        //@@author A0164032U, A0164889E
-        if (person.getDate().value.equals("")) {
+
+        // phone.setText(person.getPhone().value);
+        if (person.getDate().value.equals("00.00")) {
             date.setText("");
         } else {
             date.setText("End date: " + person.getDate().value);
         }
 
-        if (person.getStartDate().value.equals("")) {
+        if (person.getStartDate().equals("00.00")) {
             sdate.setText("");
         } else {
             sdate.setText("Start Date: " + person.getStartDate().value);
         }
-        //@@author
-
+        // address.setText(person.getAddress().value);
         group.setText(person.getGroup().value);
         email.setText(person.getEmail().value);
         initTags(person);

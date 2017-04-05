@@ -26,16 +26,10 @@ public class StartDate {
     public StartDate(String sdate) throws IllegalValueException {
         assert sdate != null;
         String trimmedDate = sdate.trim();
-        
-        trimmedDate += " ";
-        //@@author A0164889E
-        if (trimmedDate == " ") {
-            this.value = "";
-            
-        }else {
-            this.value = parse(trimmedDate);
-        } 
-        //@@author
+
+
+        this.value = parse(trimmedDate);
+
     }
 
     private String parse(String rawDate) throws IllegalValueException {
