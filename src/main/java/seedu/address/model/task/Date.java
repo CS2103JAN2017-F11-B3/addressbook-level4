@@ -26,8 +26,12 @@ public class Date {
         assert date != null;
         String trimmedDate = date.trim();
 
-        //@@author A0163848R
-        this.value = parse(trimmedDate);
+        //@@author A0163848R, A0164889E
+        if (trimmedDate != "null") {
+            this.value = parse(trimmedDate);
+        }else {
+            this.value = "";
+        }        
         //@@author
     }
 

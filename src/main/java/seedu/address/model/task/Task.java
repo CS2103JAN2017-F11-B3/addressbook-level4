@@ -24,9 +24,9 @@ public class Task implements ReadOnlyPerson {
      */
 
 
-    public Task(Name name, Date date,StartDate sdate, Email email, Group group, UniqueTagList tags) {
+    public Task(Name name, Date date, StartDate sdate, Email email, Group group, UniqueTagList tags) {
 
-        assert !CollectionUtil.isAnyNull(name, date, email, group, tags);
+        assert !CollectionUtil.isAnyNull(name, date, sdate, email, group, tags);
         this.name = name;
         this.date = date;
         this.sdate = sdate;
