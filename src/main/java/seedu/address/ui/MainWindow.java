@@ -26,7 +26,7 @@ import seedu.address.logic.Logic;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.YTomorrow;
-import seedu.address.model.task.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -254,7 +254,7 @@ public class MainWindow extends Window {
         return this.personListPanel;
     }
 
-    void loadPersonPage(ReadOnlyPerson person) {
+    void loadPersonPage(ReadOnlyTask person) {
         browserPanel.loadPersonPage(person);
     }
 

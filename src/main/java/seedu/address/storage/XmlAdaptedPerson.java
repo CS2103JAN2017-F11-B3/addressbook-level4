@@ -15,7 +15,7 @@ import seedu.address.model.task.Group;
 import seedu.address.model.task.Name;
 import seedu.address.model.task.StartDate;
 import seedu.address.model.task.Task;
-import seedu.address.model.task.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * JAXB-friendly version of the Person.
@@ -48,7 +48,7 @@ public class XmlAdaptedPerson {
      *
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
-    public XmlAdaptedPerson(ReadOnlyPerson source) {
+    public XmlAdaptedPerson(ReadOnlyTask source) {
         name = source.getName().fullName;
         date = source.getDate().value;
         sdate = source.getStartDate().value;

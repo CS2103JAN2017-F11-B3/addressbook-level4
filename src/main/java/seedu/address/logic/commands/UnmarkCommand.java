@@ -8,7 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.tag.UniqueTagList.DuplicateTagException;
-import seedu.address.model.task.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.UniquePersonList;
 
@@ -43,13 +43,13 @@ public class UnmarkCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyTask> lastShownList = model.getFilteredPersonList();
 
         if (filteredPersonListIndex >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToEdit = lastShownList.get(filteredPersonListIndex);
+        ReadOnlyTask personToEdit = lastShownList.get(filteredPersonListIndex);
         Task editedPerson = createUnmarkedPerson(personToEdit);
 
         try {
@@ -65,7 +65,7 @@ public class UnmarkCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited to be complete.
      */
-    private static Task createUnmarkedPerson(ReadOnlyPerson personToEdit) {
+    private static Task createUnmarkedPerson(ReadOnlyTask personToEdit) {
         assert personToEdit != null;
 
         UniqueTagList updatedTags =

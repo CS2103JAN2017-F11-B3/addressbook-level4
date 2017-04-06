@@ -11,7 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.Parser;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.task.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.storage.Storage;
 
 /**
@@ -37,7 +37,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+    public ObservableList<ReadOnlyTask> getFilteredPersonList() {
         return model.getFilteredPersonList();
     }
     

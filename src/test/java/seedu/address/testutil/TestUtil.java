@@ -38,7 +38,7 @@ import seedu.address.model.task.Group;
 import seedu.address.model.task.Name;
 import seedu.address.model.task.StartDate;
 import seedu.address.model.task.Task;
-import seedu.address.model.task.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.storage.XmlSerializableAddressBook;
 
 /**
@@ -337,7 +337,7 @@ public class TestUtil {
         return list;
     }
 
-    public static boolean compareCardAndPerson(PersonCardHandle card, ReadOnlyPerson person) {
+    public static boolean compareCardAndPerson(PersonCardHandle card, ReadOnlyTask person) {
         return card.isSamePerson(person);
     }
 

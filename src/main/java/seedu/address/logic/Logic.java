@@ -5,7 +5,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.task.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * API of the Logic component
@@ -20,7 +20,7 @@ public interface Logic {
     CommandResult execute(String commandText) throws CommandException;
 
     /** Returns the filtered list of persons */
-    ObservableList<ReadOnlyPerson> getFilteredPersonList();
+    ObservableList<ReadOnlyTask> getFilteredPersonList();
     
     //@@author A0163848R
     /**

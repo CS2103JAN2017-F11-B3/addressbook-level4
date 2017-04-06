@@ -8,7 +8,7 @@ import seedu.address.model.tag.UniqueTagList;
  * values are validated.
  */
 //@@ author A0164032U
-public interface ReadOnlyPerson {
+public interface ReadOnlyTask {
 
     Name getName();
 
@@ -30,7 +30,7 @@ public interface ReadOnlyPerson {
      * Returns true if both have the same state. (interfaces cannot override
      * .equals)
      */
-    default boolean isSameStateAs(ReadOnlyPerson other) {
+    default boolean isSameStateAs(ReadOnlyTask other) {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                         && other.getName().equals(this.getName()) // state
