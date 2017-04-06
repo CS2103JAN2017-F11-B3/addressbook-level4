@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,14 +44,17 @@ public class MainWindow extends Window {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    //private BrowserPanel browserPanel;
+    private PersonListPanelComplete personListPanelComplete;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
+//    @FXML
+//    private AnchorPane browserPlaceholder;
     @FXML
-    private AnchorPane browserPlaceholder;
-
+    private AnchorPane personListPanelCompletePlaceholder;
+    
     @FXML
     private AnchorPane commandBoxPlaceholder;
 
@@ -99,7 +104,7 @@ public class MainWindow extends Window {
         //@@author A0163848R
         ThemeManager.changeTheme(getRoot(), prefs.getGuiSettings().getStyleSheet());
         //@@author
-
+        
         setAccelerators();
     }
 
@@ -141,10 +146,12 @@ public class MainWindow extends Window {
             }
         });
     }
-
+    
+    //@@author A0164889E
     void fillInnerParts() {
-        browserPanel = new BrowserPanel(browserPlaceholder);
+        //browserPanel = new BrowserPanel(browserPlaceholder);       
         personListPanel = new PersonListPanel(getPersonListPlaceholder(), logic.getFilteredPersonList());
+        personListPanelComplete = new PersonListPanelComplete(getPersonListCompletePlaceholder(), logic.getFilteredPersonListComplete());
         new ResultDisplay(getResultDisplayPlaceholder());
         new StatusBarFooter(getStatusbarPlaceholder(), config.getAddressBookFilePath());
         new CommandBox(getCommandBoxPlaceholder(), logic);
@@ -164,6 +171,11 @@ public class MainWindow extends Window {
 
     private AnchorPane getPersonListPlaceholder() {
         return personListPanelPlaceholder;
+    }
+    
+    //@@author A0164889E
+    private AnchorPane getPersonListCompletePlaceholder() {
+        return personListPanelCompletePlaceholder;
     }
 
     /**
@@ -253,13 +265,17 @@ public class MainWindow extends Window {
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
+    //@@author A0164889E
+//    void loadPersonPage(ReadOnlyPerson person) {
+//        browserPanel.loadPersonPage(person);
+//    }
 
-    void loadPersonPage(ReadOnlyPerson person) {
-        browserPanel.loadPersonPage(person);
+//    void releaseResources() {
+//        browserPanel.freeResources();
+//    }
+
+    public PersonListPanelComplete getPersonListPanelComplete() {
+        return this.personListPanelComplete;
     }
-
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
+    //@@author
 }

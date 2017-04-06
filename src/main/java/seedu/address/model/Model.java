@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import java.util.Set;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.UnmodifiableObservableList;
 import seedu.address.model.task.ReadOnlyPerson;
 import seedu.address.model.task.Task;
@@ -33,6 +34,17 @@ public interface Model {
      */
     void updatePerson(int filteredPersonListIndex, ReadOnlyPerson editedPerson)
             throws UniquePersonList.DuplicatePersonException;
+    
+    //@@author A0164889E
+//    /**
+//     * Updates the person located at {@code filteredPersonListIndex} with {@code editedPerson}.
+//     *
+//     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
+//     *      another existing person in the list.
+//     * @throws IndexOutOfBoundsException if {@code filteredPersonListIndex} < 0 or >= the size of the filtered list.
+//     */
+//    void updatePersonComplete(int filteredPersonListIndex, ReadOnlyPerson editedPerson)
+//            throws UniquePersonList.DuplicatePersonException;
 
     /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
     UnmodifiableObservableList<ReadOnlyPerson> getFilteredPersonList();
@@ -61,4 +73,7 @@ public interface Model {
     /** Adds entries from the given YTomorrow to the current YTomorrow and updates equivalent entries. */
     void mergeYTomorrow(ReadOnlyAddressBook add);
 
+    //@@author A0164889E
+    /** Returns the filtered person complete list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
+    UnmodifiableObservableList<ReadOnlyPerson> getFilteredPersonListComplete();
 }

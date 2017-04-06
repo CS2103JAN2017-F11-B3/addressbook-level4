@@ -39,5 +39,9 @@ public interface Logic {
      * @param YTomorrow to add entries from
      */
     void importYTomorrow(ReadOnlyAddressBook add);
+
+    //@@author A0164889E
+    /** Returns the filtered list of persons for Complete task*/
+    ObservableList<ReadOnlyPerson> getFilteredPersonListComplete();
     
 }

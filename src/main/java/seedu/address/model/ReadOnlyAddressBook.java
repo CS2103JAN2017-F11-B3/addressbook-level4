@@ -21,4 +21,10 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Tag> getTagList();
 
+    //@@author A0164889E
+//    /**
+//     * Returns an unmodifiable view of the persons complete list.
+//     * This list will not contain any duplicate persons.
+//     */
+//    ObservableList<ReadOnlyPerson> getPersonListComplete();
 }

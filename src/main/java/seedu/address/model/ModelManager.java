@@ -23,9 +23,14 @@ import seedu.address.model.task.UniquePersonList.PersonNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final YTomorrow addressBook;
+    private final YTomorrow addressBook;    
+    //@@author A0164889E
+    private final YTomorrow addressBookComplete;
+    
     private final History<ReadOnlyAddressBook> history;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    //@@author A0164889E
+    private final FilteredList<ReadOnlyPerson> filteredPersonsComplete;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,8 +42,13 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new YTomorrow(addressBook);
+        //@@author A0164889E
+        this.addressBookComplete = new YTomorrow(addressBook);
+        
         this.history = new History<ReadOnlyAddressBook>();
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        //@@author A0164889E
+        filteredPersonsComplete = new FilteredList<>(this.addressBookComplete.getPersonList());
 
         //@@author A0163848R
         history.push(addressBook);
@@ -52,6 +62,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
+        //@@author A0164889E
+        addressBookComplete.resetData(newData);
+        
         indicateAddressBookChanged();
     }
 
@@ -64,19 +77,29 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateAddressBookChanged() {
         //@@author A0163848R-reused
         addToHistory(new YTomorrow(addressBook));
+        addToHistory(new YTomorrow(addressBookComplete));
         //@@author
+        
         raise(new AddressBookChangedEvent(addressBook));
+        //@@author A0164889E
+        raise(new AddressBookChangedEvent(addressBookComplete));
     }
 
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+        //@@author A0164889E
+        addressBookComplete.removePerson(target);
+        
         indicateAddressBookChanged();
     }
 
     @Override
     public synchronized void addPerson(Task person) throws UniquePersonList.DuplicatePersonException {
         addressBook.addPerson(person);
+        //@@author A0164889E
+        addressBookComplete.addPerson(person);
+        
         updateFilteredListToShowAll();
         indicateAddressBookChanged();
     }
@@ -88,8 +111,22 @@ public class ModelManager extends ComponentManager implements Model {
 
         int addressBookIndex = filteredPersons.getSourceIndex(filteredPersonListIndex);
         addressBook.updatePerson(addressBookIndex, editedPerson);
+        //@@author A0164889E
+        int addressBookIndexComplete = filteredPersonsComplete.getSourceIndex(filteredPersonListIndex);
+        addressBookComplete.updatePerson(addressBookIndexComplete, editedPerson);
+        
         indicateAddressBookChanged();
     }
+    
+//    @Override
+//    public void updatePersonComplete(int filteredPersonListIndex, ReadOnlyPerson editedPerson)
+//            throws UniquePersonList.DuplicatePersonException {
+//        assert editedPerson != null;
+//
+//        int addressBookIndex = filteredPersonsComplete.getSourceIndex(filteredPersonListIndex);
+//        addressBook.updatePerson(addressBookIndex, editedPerson);
+//        indicateAddressBookChanged();
+//    }
 
     //@@author A0163848R
     @Override
@@ -97,6 +134,8 @@ public class ModelManager extends ComponentManager implements Model {
         ReadOnlyAddressBook undone = history.undo();
         if (undone != null) {
             addressBook.resetData(undone);
+            //@@author A0164889E
+            addressBookComplete.resetData(undone);
             return true;
         }
         return false;
@@ -107,6 +146,8 @@ public class ModelManager extends ComponentManager implements Model {
         ReadOnlyAddressBook redone = history.redo();
         if (redone != null) {
             addressBook.resetData(redone);
+            //@@author A0164889E
+            addressBookComplete.resetData(redone);
             return true;
         }
         return false;
@@ -118,10 +159,15 @@ public class ModelManager extends ComponentManager implements Model {
             Task task = new Task(readOnlyTask);
             try {
                 addressBook.addPerson(task);
+                //@@author A0164889E
+                addressBookComplete.addPerson(task);
             } catch (DuplicatePersonException e) {
                 try {
                     addressBook.removePerson(task);
                     addressBook.addPerson(task);
+                    //@@author A0164889E
+                    addressBookComplete.removePerson(task);
+                    addressBookComplete.addPerson(task);
                 } catch (PersonNotFoundException | DuplicatePersonException el) {
                 }
                 
@@ -142,10 +188,18 @@ public class ModelManager extends ComponentManager implements Model {
     public UnmodifiableObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return new UnmodifiableObservableList<>(filteredPersons);
     }
+    
+    //@@author A0164889E
+    @Override
+    public UnmodifiableObservableList<ReadOnlyPerson> getFilteredPersonListComplete() {
+        return new UnmodifiableObservableList<>(filteredPersonsComplete);
+    }
 
     @Override
     public void updateFilteredListToShowAll() {
         filteredPersons.setPredicate(null);
+        //@@author A0164889E
+        filteredPersonsComplete.setPredicate(null);
     }
 
     @Override
@@ -158,6 +212,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     //@@author A0164889E
+    public void updateFilteredPersonListComplete(Set<String> keywords) {
+        updateFilteredPersonListComplete(new PredicateExpression(new NameQualifier(keywords)));
+    }
+    
+    private void updateFilteredPersonListComplete(Expression expression) {
+        filteredPersonsComplete.setPredicate(expression::satisfies);
+    }
+    
+    //@@author A0164889E
     @Override
     public void updateFilteredPersonListGroup(Set<String> keywords) {
         updateFilteredPersonListGroup(new PredicateExpression(new GroupQualifier(keywords)));
@@ -165,6 +228,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void updateFilteredPersonListGroup(Expression expression) {
         filteredPersons.setPredicate(expression::satisfies);
+    }
+    
+    private void updateFilteredPersonListGroupComplete(Expression expression) {
+        filteredPersonsComplete.setPredicate(expression::satisfies);
     }
     //@@author
 

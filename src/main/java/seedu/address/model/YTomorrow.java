@@ -25,6 +25,10 @@ public class YTomorrow implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    
+    //@@author A0164889E
+    private final UniquePersonList personsComplete;
+    private final UniqueTagList tagsComplete;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -36,6 +40,10 @@ public class YTomorrow implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        
+        //@@author A0164889E
+        personsComplete = new UniquePersonList();
+        tagsComplete = new UniqueTagList();
     }
 
     public YTomorrow() {}
@@ -54,6 +62,11 @@ public class YTomorrow implements ReadOnlyAddressBook {
             throws UniquePersonList.DuplicatePersonException {
         this.persons.setPersons(persons);
     }
+    
+    public void setPersonsComplete(List<? extends ReadOnlyPerson> persons)
+            throws UniquePersonList.DuplicatePersonException {
+        this.personsComplete.setPersons(persons);
+    }
 
     public void setTags(Collection<Tag> tags) throws UniqueTagList.DuplicateTagException {
         this.tags.setTags(tags);
@@ -63,6 +76,8 @@ public class YTomorrow implements ReadOnlyAddressBook {
         assert newData != null;
         try {
             setPersons(newData.getPersonList());
+            //@author A0164889E
+            //setPersonsComplete(newData.getPersonList());
         } catch (UniquePersonList.DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
@@ -72,6 +87,7 @@ public class YTomorrow implements ReadOnlyAddressBook {
             assert false : "AddressBooks should not have duplicate tags";
         }
         syncMasterTagListWith(persons);
+        //syncMasterTagListWithComplete(personsComplete);
     }
 
 //// person-level operations
@@ -86,6 +102,12 @@ public class YTomorrow implements ReadOnlyAddressBook {
     public void addPerson(Task p) throws UniquePersonList.DuplicatePersonException {
         syncMasterTagListWith(p);
         persons.add(p);
+    }
+    
+    //@@author A0164889E
+    public void addPersonComplete(Task p) throws UniquePersonList.DuplicatePersonException {
+        syncMasterTagListWithComplete(p);
+        personsComplete.add(p);
     }
 
     /**
@@ -106,7 +128,20 @@ public class YTomorrow implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
-        persons.updatePerson(index, editedPerson);
+        persons.updatePerson(index, editedPerson);        
+    }
+    
+    //@@author A0164889E
+    public void updatePersonComplete(int index, ReadOnlyPerson editedReadOnlyPerson)
+            throws UniquePersonList.DuplicatePersonException {
+        assert editedReadOnlyPerson != null;
+
+        Task editedPerson = new Task(editedReadOnlyPerson);
+        syncMasterTagListWithComplete(editedPerson);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        personsComplete.updatePerson(index, editedPerson);      
     }
 
     /**
@@ -128,6 +163,22 @@ public class YTomorrow implements ReadOnlyAddressBook {
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         person.setTags(new UniqueTagList(correctTagReferences));
     }
+    
+    //@@author A0164889E
+    private void syncMasterTagListWithComplete(Task person) {
+        final UniqueTagList personTags = person.getTags();
+        tagsComplete.mergeFrom(personTags);
+
+        // Create map with values = tag object references in the master list
+        // used for checking person tag references
+        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
+        tagsComplete.forEach(tag -> masterTagObjects.put(tag, tag));
+
+        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
+        final Set<Tag> correctTagReferences = new HashSet<>();
+        personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        person.setTags(new UniqueTagList(correctTagReferences));
+    }
 
     /**
      * Ensures that every tag in these persons:
@@ -138,9 +189,23 @@ public class YTomorrow implements ReadOnlyAddressBook {
     private void syncMasterTagListWith(UniquePersonList persons) {
         persons.forEach(this::syncMasterTagListWith);
     }
+    
+    //@@author A0164889E
+    private void syncMasterTagListWithComplete(UniquePersonList persons) {
+        persons.forEach(this::syncMasterTagListWithComplete);
+    }
 
     public boolean removePerson(ReadOnlyPerson key) throws UniquePersonList.PersonNotFoundException {
         if (persons.remove(key)) {
+            return true;
+        } else {
+            throw new UniquePersonList.PersonNotFoundException();
+        }
+    }
+    
+    //@@author A0164889E
+    public boolean removePersonComplete(ReadOnlyPerson key) throws UniquePersonList.PersonNotFoundException {
+        if (personsComplete.remove(key)) {
             return true;
         } else {
             throw new UniquePersonList.PersonNotFoundException();
@@ -152,6 +217,11 @@ public class YTomorrow implements ReadOnlyAddressBook {
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
+    
+    //@@author A0164889E
+    public void addTagComplete(Tag t) throws UniqueTagList.DuplicateTagException {
+        tagsComplete.add(t);
+    }
 
 //// util methods
 
@@ -160,15 +230,32 @@ public class YTomorrow implements ReadOnlyAddressBook {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
         // TODO: refine later
     }
+    
+    //@@author A0164889E
+    public String toStringComplete() {
+        return personsComplete.asObservableList().size() + " persons, " + tagsComplete.asObservableList().size() +  " tags";
+        // TODO: refine later
+    }
 
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return new UnmodifiableObservableList<>(persons.asObservableList());
     }
+    
+    //@@author A0164889E
+    //@Override
+    //public ObservableList<ReadOnlyPerson> getPersonListComplete() {
+    //    return new UnmodifiableObservableList<>(personsComplete.asObservableList());
+    //}
 
     @Override
     public ObservableList<Tag> getTagList() {
         return new UnmodifiableObservableList<>(tags.asObservableList());
+    }
+    
+    //@@author A0164889E
+    public ObservableList<Tag> getTagListComplete() {
+        return new UnmodifiableObservableList<>(tagsComplete.asObservableList());
     }
 
     @Override
@@ -178,10 +265,24 @@ public class YTomorrow implements ReadOnlyAddressBook {
                 && this.persons.equals(((YTomorrow) other).persons)
                 && this.tags.equalsOrderInsensitive(((YTomorrow) other).tags));
     }
+    
+    //@@author A0164889E
+    public boolean equalsComplete(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof YTomorrow // instanceof handles nulls
+                && this.personsComplete.equals(((YTomorrow) other).personsComplete)
+                && this.tagsComplete.equalsOrderInsensitive(((YTomorrow) other).tagsComplete));
+    }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
+    }
+    
+    //@@author A0164889E
+    public int hashCodeComplete() {
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(personsComplete, tagsComplete);
     }
 }
