@@ -21,6 +21,8 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnmarkCommand;
+import seedu.address.logic.commands.ListCompleteCommand;
+import seedu.address.logic.commands.ListIncompleteCommand;
 
 /**
  * Parses user input.
@@ -68,6 +70,13 @@ public class Parser {
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
+            
+        //@@author A0164466X     
+        case ListCompleteCommand.COMMAND_WORD:
+            return new ListCompleteCommand();
+            
+        case ListIncompleteCommand.COMMAND_WORD:
+            return new ListIncompleteCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
