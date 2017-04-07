@@ -8,8 +8,12 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.UnmodifiableObservableList;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.tag.UniqueTagList.DuplicateTagException;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.UniquePersonList;
@@ -25,7 +29,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final YTomorrow addressBook;
     private final History<ReadOnlyAddressBook> history;
-    private final FilteredList<ReadOnlyTask> filteredPersons;
+    private final FilteredList<ReadOnlyTask> filteredTasks;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -38,7 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new YTomorrow(addressBook);
         this.history = new History<ReadOnlyAddressBook>();
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredTasks = new FilteredList<>(this.addressBook.getPersonList());
 
         //@@author A0163848R
         history.push(addressBook);
@@ -86,7 +90,7 @@ public class ModelManager extends ComponentManager implements Model {
             throws UniquePersonList.DuplicatePersonException {
         assert editedPerson != null;
 
-        int addressBookIndex = filteredPersons.getSourceIndex(filteredPersonListIndex);
+        int addressBookIndex = filteredTasks.getSourceIndex(filteredPersonListIndex);
         addressBook.updatePerson(addressBookIndex, editedPerson);
         indicateAddressBookChanged();
     }
@@ -140,12 +144,12 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public UnmodifiableObservableList<ReadOnlyTask> getFilteredPersonList() {
-        return new UnmodifiableObservableList<>(filteredPersons);
+        return new UnmodifiableObservableList<>(filteredTasks);
     }
 
     @Override
     public void updateFilteredListToShowAll() {
-        filteredPersons.setPredicate(null);
+        filteredTasks.setPredicate(null);
     }
 
     @Override
@@ -154,20 +158,37 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     private void updateFilteredPersonList(Expression expression) {
-        filteredPersons.setPredicate(expression::satisfies);
+        filteredTasks.setPredicate(expression::satisfies);
     }
     
     //@@author A0164466X
     @Override
     public void updateFilteredListToShowComplete() {
         // TODO Auto-generated method stub
+        try {
+            updateFilteredPersonList(new PredicateExpression(new TagQualifier(new UniqueTagList(Tag.TAG_COMPLETE))));
+        } catch (DuplicateTagException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalValueException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         
     }
 
     @Override
     public void updateFilteredListToShowIncomplete() {
         // TODO Auto-generated method stub
-        
+        try {
+            updateFilteredPersonList(new PredicateExpression(new TagQualifier(new UniqueTagList(Tag.TAG_INCOMPLETE))));
+        } catch (DuplicateTagException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalValueException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     //========== Inner classes/interfaces used for filtering =================================================
@@ -186,8 +207,8 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         @Override
-        public boolean satisfies(ReadOnlyTask person) {
-            return qualifier.run(person);
+        public boolean satisfies(ReadOnlyTask task) {
+            return qualifier.run(task);
         }
 
         @Override
@@ -209,9 +230,9 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         @Override
-        public boolean run(ReadOnlyTask person) {
+        public boolean run(ReadOnlyTask task) {
             return nameKeyWords.stream()
-                    .filter(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword))
+                    .filter(keyword -> StringUtil.containsWordIgnoreCase(task.getName().fullName, keyword))
                     .findAny()
                     .isPresent();
         }
@@ -220,6 +241,23 @@ public class ModelManager extends ComponentManager implements Model {
         public String toString() {
             return "name=" + String.join(", ", nameKeyWords);
         }
+    }
+    
+    //@@author A0164466X
+    private class TagQualifier implements Qualifier {
+        private UniqueTagList tags;
+        
+        TagQualifier(UniqueTagList tags){
+            this.tags = tags;
+        }
+        
+        @Override
+        public boolean run(ReadOnlyTask task) {
+            return task.getTags().equals(tags);
+        }
+        
+        //Default toString() method used
+        
     }
 
 }
