@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -18,6 +19,7 @@ import seedu.address.model.task.Task;
 import seedu.address.model.task.UniquePersonList;
 import seedu.address.model.task.UniquePersonList.DuplicatePersonException;
 import seedu.address.model.task.UniquePersonList.PersonNotFoundException;
+import seedu.address.ui.MainWindow;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -28,13 +30,13 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final YTomorrow addressBook;    
     //@@author A0164889E
-    private YTomorrow addressBookComplete;
+    //private YTomorrow addressBookComplete;
     
     private final History<ReadOnlyAddressBook> history;
     
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     //@@author A0164889E
-    private final FilteredList<ReadOnlyPerson> filteredPersonsComplete;
+    private FilteredList<ReadOnlyPerson> filteredPersonsComplete;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -47,14 +49,20 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new YTomorrow(addressBook);
         //@@author A0164889E
-        indicateCompleteListToChange();
+        initialCompleteList();
 
         this.history = new History<ReadOnlyAddressBook>();
 
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         //@@author A0164889E
-        filteredPersonsComplete = new FilteredList<>(this.addressBookComplete.getPersonList());
-
+        filteredPersonsComplete = new FilteredList<>(this.addressBook.getPersonList());
+       
+        indicateCompleteListToChange();
+//        Set<String> set = new HashSet<String>();
+//        set.add("incomplete");
+//        updateFilteredPersonListTag(set);
+//        //@@author A0164889E
+//        indicateCompleteListToChange();
         //@@author A0163848R
         history.push(addressBook);
     }
@@ -85,7 +93,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         raise(new AddressBookChangedEvent(addressBook));
         //@@author A0164889E
-        raise(new AddressBookChangedEvent(addressBookComplete));
+        //raise(new AddressBookChangedEvent(addressBookComplete));
     }
 
     @Override
@@ -172,23 +180,49 @@ public class ModelManager extends ComponentManager implements Model {
     
     //@@author A0164889E
     public void indicateCompleteListToChange() {
-        addressBookComplete = new YTomorrow();
-        UniqueTagList tags;
-        try {
-            tags = new UniqueTagList("complete");
-            for(int i=0; i<addressBook.getPersonList().size(); i++) {
-                if(addressBook.getPersonList().get(i).getTags().equals(tags)) {
-                    Task task = new Task(addressBook.getPersonList().get(i));
-                    addressBookComplete.addPerson(task);
-                }
-            }          
-        } catch (DuplicateTagException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalValueException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }       
+//        addressBookComplete = new YTomorrow();
+//        UniqueTagList tags;
+//        try {
+//            tags = new UniqueTagList("complete");
+//            for(int i=0; i<addressBook.getPersonList().size(); i++) {
+//                if(addressBook.getPersonList().get(i).getTags().equals(tags)) {
+//                    Task task = new Task(addressBook.getPersonList().get(i));
+//                    addressBookComplete.addPerson(task);
+//                }
+//            }  
+            //@@author A0164889E
+            //filteredPersonsComplete = new FilteredList<>(this.addressBookComplete.getPersonList());
+            Set<String> set = new HashSet<String>();
+            set.add("complete");
+            updateFilteredPersonListTag(set);
+//        } catch (DuplicateTagException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        } catch (IllegalValueException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }       
+    }
+    
+    //@@author A0164889E
+    public void initialCompleteList() {
+//        addressBookComplete = new YTomorrow();
+//        UniqueTagList tags;
+//        try {
+//            tags = new UniqueTagList("complete");
+//            for(int i=0; i<addressBook.getPersonList().size(); i++) {
+//                if(addressBook.getPersonList().get(i).getTags().equals(tags)) {
+//                    Task task = new Task(addressBook.getPersonList().get(i));
+//                    addressBookComplete.addPerson(task);
+//                }
+//            }  
+//        } catch (DuplicateTagException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        } catch (IllegalValueException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }       
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -219,16 +253,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void updateFilteredPersonList(Expression expression) {
         filteredPersons.setPredicate(expression::satisfies);
     }
-    
-    //@@author A0164889E
-    public void updateFilteredPersonListComplete(Set<String> keywords) {
-        updateFilteredPersonListComplete(new PredicateExpression(new NameQualifier(keywords)));
-    }
-    
-    private void updateFilteredPersonListComplete(Expression expression) {
-        filteredPersonsComplete.setPredicate(expression::satisfies);
-    }
-    
+  
     //@@author A0164889E
     @Override
     public void updateFilteredPersonListGroup(Set<String> keywords) {
@@ -239,7 +264,11 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(expression::satisfies);
     }
     
-    private void updateFilteredPersonListGroupComplete(Expression expression) {
+    public void updateFilteredPersonListTag(UniqueTagList keywords) {
+        updateFilteredPersonListTag(new PredicateExpression(new TagQualifier(keywords)));
+    }
+
+    private void updateFilteredPersonListTag(Expression expression) {
         filteredPersonsComplete.setPredicate(expression::satisfies);
     }
     //@@author
@@ -315,6 +344,27 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public String toString() {
             return "name=" + String.join(", ", groupKeyWords);
+        }
+    }
+
+    private class TagQualifier implements Qualifier {
+        private UniqueTagList tagKeyWords;
+
+        TagQualifier(UniqueTagList tagKeyWords) {
+            this.tagKeyWords = tagKeyWords;
+        }
+
+        @Override
+        public boolean run(ReadOnlyPerson person) {
+            return tagKeyWords.stream()
+                    .filter(keyword -> StringUtil.containsWordIgnoreCase(person.getTags(). keyword))
+                    .findAny()
+                    .isPresent();
+        }
+
+        @Override
+        public String toString() {
+            return "tag=" + String.join(", ", tagKeyWords);
         }
     }
     //@@author

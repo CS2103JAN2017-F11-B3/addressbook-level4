@@ -273,5 +273,9 @@ public class MainWindow extends Window {
     public PersonListPanelComplete getPersonListPanelComplete() {
         return this.personListPanelComplete;
     }
+    
+    public void setUpCompleteList() {
+        personListPanelComplete = new PersonListPanelComplete(getPersonListCompletePlaceholder(), logic.getFilteredPersonListComplete());
+    }
     //@@author
 }
