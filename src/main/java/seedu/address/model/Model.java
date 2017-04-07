@@ -34,17 +34,6 @@ public interface Model {
      */
     void updatePerson(int filteredPersonListIndex, ReadOnlyPerson editedPerson)
             throws UniquePersonList.DuplicatePersonException;
-    
-    //@@author A0164889E
-//    /**
-//     * Updates the person located at {@code filteredPersonListIndex} with {@code editedPerson}.
-//     *
-//     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-//     *      another existing person in the list.
-//     * @throws IndexOutOfBoundsException if {@code filteredPersonListIndex} < 0 or >= the size of the filtered list.
-//     */
-//    void updatePersonComplete(int filteredPersonListIndex, ReadOnlyPerson editedPerson)
-//            throws UniquePersonList.DuplicatePersonException;
 
     /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
     UnmodifiableObservableList<ReadOnlyPerson> getFilteredPersonList();

@@ -44,14 +44,11 @@ public class MainWindow extends Window {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    //private BrowserPanel browserPanel;
     private PersonListPanelComplete personListPanelComplete;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
-//    @FXML
-//    private AnchorPane browserPlaceholder;
     @FXML
     private AnchorPane personListPanelCompletePlaceholder;
     
@@ -149,7 +146,6 @@ public class MainWindow extends Window {
     
     //@@author A0164889E
     void fillInnerParts() {
-        //browserPanel = new BrowserPanel(browserPlaceholder);       
         personListPanel = new PersonListPanel(getPersonListPlaceholder(), logic.getFilteredPersonList());
         personListPanelComplete = new PersonListPanelComplete(getPersonListCompletePlaceholder(), logic.getFilteredPersonListComplete());
         new ResultDisplay(getResultDisplayPlaceholder());

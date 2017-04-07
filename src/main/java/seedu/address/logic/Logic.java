@@ -42,6 +42,5 @@ public interface Logic {
 
     //@@author A0164889E
     /** Returns the filtered list of persons for Complete task*/
-    ObservableList<ReadOnlyPerson> getFilteredPersonListComplete();
-    
+    ObservableList<ReadOnlyPerson> getFilteredPersonListComplete();    
 }

@@ -8,8 +8,11 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.UnmodifiableObservableList;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.tag.UniqueTagList.DuplicateTagException;
 import seedu.address.model.task.ReadOnlyPerson;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.UniquePersonList;
@@ -25,9 +28,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final YTomorrow addressBook;    
     //@@author A0164889E
-    private final YTomorrow addressBookComplete;
+    private YTomorrow addressBookComplete;
     
     private final History<ReadOnlyAddressBook> history;
+    
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     //@@author A0164889E
     private final FilteredList<ReadOnlyPerson> filteredPersonsComplete;
@@ -43,16 +47,16 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new YTomorrow(addressBook);
         //@@author A0164889E
-        this.addressBookComplete = new YTomorrow(addressBook);
-        
+        indicateCompleteListToChange();
+
         this.history = new History<ReadOnlyAddressBook>();
+
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         //@@author A0164889E
         filteredPersonsComplete = new FilteredList<>(this.addressBookComplete.getPersonList());
 
         //@@author A0163848R
         history.push(addressBook);
-        //@@author
     }
 
     public ModelManager() {
@@ -62,10 +66,10 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
+
         //@@author A0164889E
-        addressBookComplete.resetData(newData);
-        
-        indicateAddressBookChanged();
+        indicateCompleteListToChange(); 
+        indicateAddressBookChanged();   
     }
 
     @Override
@@ -77,9 +81,8 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateAddressBookChanged() {
         //@@author A0163848R-reused
         addToHistory(new YTomorrow(addressBook));
-        addToHistory(new YTomorrow(addressBookComplete));
         //@@author
-        
+
         raise(new AddressBookChangedEvent(addressBook));
         //@@author A0164889E
         raise(new AddressBookChangedEvent(addressBookComplete));
@@ -88,19 +91,19 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+
         //@@author A0164889E
-        addressBookComplete.removePerson(target);
-        
-        indicateAddressBookChanged();
+        indicateCompleteListToChange();
+        indicateAddressBookChanged();            
     }
 
     @Override
     public synchronized void addPerson(Task person) throws UniquePersonList.DuplicatePersonException {
         addressBook.addPerson(person);
-        //@@author A0164889E
-        addressBookComplete.addPerson(person);
-        
+
         updateFilteredListToShowAll();
+        //@@author A0164889E
+        indicateCompleteListToChange(); 
         indicateAddressBookChanged();
     }
 
@@ -111,22 +114,11 @@ public class ModelManager extends ComponentManager implements Model {
 
         int addressBookIndex = filteredPersons.getSourceIndex(filteredPersonListIndex);
         addressBook.updatePerson(addressBookIndex, editedPerson);
+
         //@@author A0164889E
-        int addressBookIndexComplete = filteredPersonsComplete.getSourceIndex(filteredPersonListIndex);
-        addressBookComplete.updatePerson(addressBookIndexComplete, editedPerson);
-        
-        indicateAddressBookChanged();
+        indicateCompleteListToChange(); 
+        indicateAddressBookChanged();       
     }
-    
-//    @Override
-//    public void updatePersonComplete(int filteredPersonListIndex, ReadOnlyPerson editedPerson)
-//            throws UniquePersonList.DuplicatePersonException {
-//        assert editedPerson != null;
-//
-//        int addressBookIndex = filteredPersonsComplete.getSourceIndex(filteredPersonListIndex);
-//        addressBook.updatePerson(addressBookIndex, editedPerson);
-//        indicateAddressBookChanged();
-//    }
 
     //@@author A0163848R
     @Override
@@ -135,7 +127,7 @@ public class ModelManager extends ComponentManager implements Model {
         if (undone != null) {
             addressBook.resetData(undone);
             //@@author A0164889E
-            addressBookComplete.resetData(undone);
+            indicateCompleteListToChange(); 
             return true;
         }
         return false;
@@ -147,7 +139,7 @@ public class ModelManager extends ComponentManager implements Model {
         if (redone != null) {
             addressBook.resetData(redone);
             //@@author A0164889E
-            addressBookComplete.resetData(redone);
+            indicateCompleteListToChange(); 
             return true;
         }
         return false;
@@ -159,27 +151,44 @@ public class ModelManager extends ComponentManager implements Model {
             Task task = new Task(readOnlyTask);
             try {
                 addressBook.addPerson(task);
-                //@@author A0164889E
-                addressBookComplete.addPerson(task);
             } catch (DuplicatePersonException e) {
                 try {
                     addressBook.removePerson(task);
                     addressBook.addPerson(task);
-                    //@@author A0164889E
-                    addressBookComplete.removePerson(task);
-                    addressBookComplete.addPerson(task);
                 } catch (PersonNotFoundException | DuplicatePersonException el) {
-                }
-                
+                }               
             }
         }
-        indicateAddressBookChanged();
+         //@@author A0164889E
+        indicateCompleteListToChange(); 
+        indicateAddressBookChanged();       
     }
     //@@author
 
     @Override
     public void addToHistory(ReadOnlyAddressBook state) {
         history.push(state);
+    }
+    
+    //@@author A0164889E
+    public void indicateCompleteListToChange() {
+        addressBookComplete = new YTomorrow();
+        UniqueTagList tags;
+        try {
+            tags = new UniqueTagList("complete");
+            for(int i=0; i<addressBook.getPersonList().size(); i++) {
+                if(addressBook.getPersonList().get(i).getTags().equals(tags)) {
+                    Task task = new Task(addressBook.getPersonList().get(i));
+                    addressBookComplete.addPerson(task);
+                }
+            }          
+        } catch (DuplicateTagException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalValueException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }       
     }
 
     //=========== Filtered Person List Accessors =============================================================

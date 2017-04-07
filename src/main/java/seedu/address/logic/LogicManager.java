@@ -12,6 +12,7 @@ import seedu.address.logic.parser.Parser;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.task.ReadOnlyPerson;
+import seedu.address.model.task.UniquePersonList.PersonNotFoundException;
 import seedu.address.storage.Storage;
 
 /**

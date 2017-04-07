@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.List;
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,13 +9,8 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FxViewUtil;
-import seedu.address.model.tag.UniqueTagList;
-import seedu.address.model.tag.UniqueTagList.DuplicateTagException;
 import seedu.address.model.task.ReadOnlyPerson;
-import seedu.address.model.task.Task;
-import seedu.address.model.task.UniquePersonList;
 
 //@@author A0164889E
 /**
@@ -36,26 +29,6 @@ public class PersonListPanelComplete extends UiPart<Region> {
     }
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
-        //@@author A0164889E
-//        UniqueTagList tags;
-//        
-//        try {
-//            tags = new UniqueTagList("complete");
-//            for (int i=0; i<personList.size(); i++){
-//                if (personList.get(i).getTags().equals(tags)) {
-//                    Task toAdd = new Task(personList.get(i));
-//                  //  completeList.add(toAdd);
-//                }
-//            }
-//        } catch (DuplicateTagException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        } catch (IllegalValueException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-
-        //@@author
         personListViewComplete.setItems(personList);
         personListViewComplete.setCellFactory(listView -> new PersonListViewCellComplete());
         setEventHandlerForSelectionChangeEvent();
@@ -94,22 +67,7 @@ public class PersonListPanelComplete extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                //@@author A0164889E
-                setGraphic(new PersonCard(person, getIndex() + 1).getRoot());
-//                UniqueTagList tags;
-//                try {
-//                    tags = new UniqueTagList("complete");
-//                    if (person.getTags() == tags) {
-//                        setGraphic(new PersonCard(person, getIndex() + 1).getRoot());
-//                    }
-//                } catch (DuplicateTagException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                } catch (IllegalValueException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }   
-                //@@author
+                setGraphic(new PersonCardComplete(person, getIndex() + 1).getRoot());
             }
         }
     }
