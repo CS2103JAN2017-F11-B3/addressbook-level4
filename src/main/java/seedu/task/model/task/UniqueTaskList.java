@@ -69,6 +69,10 @@ public class UniqueTaskList implements Iterable<Task> {
         // The right way is to implement observable properties in the Task class.
         // Then, TaskCard should then bind its text labels to those observable properties.
         internalList.set(index, taskToUpdate);
+        //@@author A0164032U
+        Comparator<Task> comparator = Comparator.comparing(Task::getEndTime);
+        FXCollections.sort(internalList, comparator);
+        //@@author
     }
 
     /**

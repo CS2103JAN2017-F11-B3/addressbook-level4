@@ -191,7 +191,6 @@ public class LogicManagerTest {
     @Test
     public void execute_add_invalidArgsFormat() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
-        assertCommandFailure("add wrong args wrong args", AddCommand.MESSAGE_NOGROUP+expectedMessage); // missing group
         assertCommandFailure("add in learning", AddCommand.MESSAGE_NONAME+expectedMessage); // missing name
         assertCommandFailure("add Valid Name from 12.12 in onlyStartTime", AddCommand.MESSAGE_ILLEGAL_TIME_PARAMS+expectedMessage); // missing endDate
     }
