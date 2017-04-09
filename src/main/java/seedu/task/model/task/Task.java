@@ -94,6 +94,12 @@ public class Task implements ReadOnlyTask {
         return new UniqueTagList(tags);
     }
 
+    //@@author A0164889E
+    @Override
+    public UniqueTagList getTagsDirect() {
+        return tags;
+    }
+
     /**
      * Replaces this task's tags with the tags in the argument tag list.
      */

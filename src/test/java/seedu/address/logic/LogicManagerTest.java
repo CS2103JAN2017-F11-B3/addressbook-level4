@@ -43,7 +43,6 @@ import seedu.task.model.ReadOnlyTaskManager;
 import seedu.task.model.YTomorrow;
 import seedu.task.model.tag.Tag;
 import seedu.task.model.tag.UniqueTagList;
-import seedu.task.model.task.Date;
 import seedu.task.model.task.EndDate;
 import seedu.task.model.task.Group;
 import seedu.task.model.task.Name;
@@ -192,7 +191,6 @@ public class LogicManagerTest {
     @Test
     public void execute_add_invalidArgsFormat() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
-        assertCommandFailure("add wrong args wrong args", AddCommand.MESSAGE_NOGROUP+expectedMessage); // missing group
         assertCommandFailure("add in learning", AddCommand.MESSAGE_NONAME+expectedMessage); // missing name
         assertCommandFailure("add Valid Name from 12.12 in onlyStartTime", AddCommand.MESSAGE_ILLEGAL_TIME_PARAMS+expectedMessage); // missing endDate
     }

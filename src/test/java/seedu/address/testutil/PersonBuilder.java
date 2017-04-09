@@ -34,7 +34,7 @@ public class PersonBuilder {
     public PersonBuilder withTags(String ... tags) throws IllegalValueException {
         person.setTags(new UniqueTagList());
         for (String tag: tags) {
-            person.getTags().add(new Tag(tag));
+            person.getTagsDirect().add(new Tag(tag));
         }
         return this;
     }
