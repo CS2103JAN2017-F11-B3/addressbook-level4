@@ -72,7 +72,7 @@ public class AddCommand extends Command {
         }
 
         if (!group.isPresent()) {
-            group = Optional.of(new Group(Group.GROUP_ID_HIDDEN));
+            throw new IllegalValueException(MESSAGE_NOGROUP);
         }
 
         if (start.isPresent() && !end.isPresent()) {
