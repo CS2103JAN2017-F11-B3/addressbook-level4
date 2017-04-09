@@ -23,6 +23,8 @@ public interface ReadOnlyTask {
      */
     UniqueTagList getTags();
 
+    UniqueTagList getTagsDirect();
+
     /**
      * Returns true if both have the same state. (interfaces cannot override
      * .equals)
@@ -58,12 +60,12 @@ public interface ReadOnlyTask {
             .append(getName() + ":")
             .append(hasStartDate ? " Start Date: " : "")
             .append(hasStartDate ? "[" + getStartDate() + "]" : "")
-            .append(hasEndDate ? " End Date: " + "]" : "")
+            .append(hasEndDate ? " End Date: " : "")
             .append(hasEndDate ? "[" + getEndDate() + "]" : "")
             .append(hasGroup ? " Group: " : "")
             .append(hasGroup ? "[" + getGroup() + "]" : "")
             .append(" Status: ");
-        getTags().forEach(builder::append);
+        getTagsDirect().forEach(builder::append);
         return builder.toString();
     }
 

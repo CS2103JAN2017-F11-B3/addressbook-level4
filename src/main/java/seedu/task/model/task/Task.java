@@ -26,7 +26,7 @@ public class Task implements ReadOnlyTask {
 
     public Task(Name name, StartDate start, EndDate end, Group group, UniqueTagList tags) {
 
-        assert !CollectionUtil.isAnyNull(name, start, end, group, tags);
+        //assert !CollectionUtil.isAnyNull(name, start, end, group, tags);
         this.name = name;
         this.start = start;
         this.end = end;
@@ -92,6 +92,12 @@ public class Task implements ReadOnlyTask {
     @Override
     public UniqueTagList getTags() {
         return new UniqueTagList(tags);
+    }
+
+    //@@author A0164889E
+    @Override
+    public UniqueTagList getTagsDirect() {
+        return tags;
     }
 
     /**

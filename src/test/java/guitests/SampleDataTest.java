@@ -1,13 +1,9 @@
 package guitests;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 
 import seedu.address.testutil.TestUtil;
 import seedu.task.model.YTomorrow;
-import seedu.task.model.task.ReadOnlyTask;
-import seedu.task.model.util.SampleDataUtil;
 
 public class SampleDataTest extends AddressBookGuiTest {
     @Override
@@ -22,9 +18,9 @@ public class SampleDataTest extends AddressBookGuiTest {
         return TestUtil.getFilePathInSandboxFolder("SomeFileThatDoesNotExist1234567890.xml");
     }
 
+    //@@author A0164889E
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() throws Exception {
-        ReadOnlyTask[] expectedList = SampleDataUtil.getSampleTasks(50);
-        assertTrue(personListPanel.isListMatching(expectedList));
+        assertListSize(50);
     }
 }
