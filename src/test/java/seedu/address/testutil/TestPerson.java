@@ -105,7 +105,10 @@ public class TestPerson implements ReadOnlyTask {
 
     @Override
 	public java.util.Date getEndTime() {
-        return null;
+        if (end != null) {
+            return end.getTime();
+        }
+        return new java.util.Date(Long.MAX_VALUE);
     }
 
     @Override

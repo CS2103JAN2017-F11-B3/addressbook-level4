@@ -1,7 +1,9 @@
 package guitests;
 
-import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS;
+
+import java.util.Arrays;
+import java.util.Comparator;
 
 import org.junit.Test;
 
@@ -15,6 +17,11 @@ public class DeleteCommandTest extends AddressBookGuiTest {
 
         //delete the first in the list
         TestPerson[] currentList = td.getTypicalPersons();
+
+        //sort the person list by endTime
+        Comparator<TestPerson> comparator = Comparator.comparing(TestPerson::getEndTime);
+        Arrays.sort(currentList, comparator);
+
         int targetIndex = 1;
         assertDeleteSuccess(targetIndex, currentList);
 
