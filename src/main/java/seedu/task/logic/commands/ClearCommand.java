@@ -35,7 +35,7 @@ public class ClearCommand extends Command {
             + ", "
             + KEYWORD_INCOMPLETE
             + "\n"
-            + "Example: " + COMMAND_WORD + " completed";
+            + "Example: " + COMMAND_WORD + " complete";
 
     public static final String MESSAGE_SUCCESS_ALL = "All tasks have been cleared!";
     //@@author A0164466X
