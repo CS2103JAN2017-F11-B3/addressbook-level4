@@ -9,8 +9,15 @@ We are a team based in the [School of Computing, National University of Singapor
 Roles and Responsibilities: In charge of GUI, JavaFX Expert <br>
 * Components in charge of: [UI]()
 * Aspects/tools in charge of:
-* Other major contributions:
 * Features implemented:
+  * [Distinguish three kinds of tasks](https://github.com/CS2103JAN2017-F11-B3/main/blob/master/docs/DeveloperGuide.md#24-model-component)
+  * [Sort task list by ascending deadline time](https://github.com/CS2103JAN2017-F11-B3/main/blob/master/docs/UserGuide.md#24-listing-all-tasks--list)
+  * [Distinguish error message and normal message](https://github.com/CS2103JAN2017-F11-B3/main/commit/10fe1da23dd104ab3c821e3336e722b4d08c816f)
+* Other major contributions:
+  * In charge of UI fixing, make the connection between Ui and model
+  * In charge of part of the documentation and all the structrue diagrams
+  * Implement GUI testing, create test case of Group Command
+  * Implement model testing, create test case of DateTest and GroupTest
 
 -----
 
@@ -40,7 +47,7 @@ Roles and Responsibilities: Team Co-Lead, Documentation, Scheduling and tracking
   * In charge of code cleanup (i.e. deleting trailing whitespace, converting \r\n\ to \n) [[#118](https://github.com/CS2103JAN2017-F11-B3/main/pull/118)]
   * Install necessary JARs (JUnit, JSon, Google Guava, JavaFX, etc.) to build path [[#92, #110](https://github.com/CS2103JAN2017-F11-B3/main/pull/110)]
   * Testing and dogfooding on Windows and macOS
-
+  
 -----
 
 #### [Muhammad Ali Rizvi](https://github.com/EntitySK)
@@ -56,6 +63,7 @@ Roles and Responsibilities: Team Co-Lead, Code Quality, Deliverables and feature
   * [Natural language task parsing](https://github.com/se-edu/addressbook-level4/blob/master/docs/UserGuide.md#23-adding-a-task--add)
   * [Natural-language date parsing](https://github.com/se-edu/addressbook-level4/blob/master/docs/UserGuide.md#23-adding-a-task--add)
   * [Theme Manager and themes](https://github.com/se-edu/addressbook-level4/blob/master/docs/UserGuide.md#219-themes)
+  * [Help page that mirrors UserGuide.md in realtime](https://github.com/se-edu/addressbook-level4/blob/master/docs/UserGuide.md#22-viewing-help--help)
   * [Task complete/incomplete indication](https://github.com/se-edu/addressbook-level4/blob/master/docs/UserGuide.md#221-completion-indication)
   * [Task past deadline indication](https://github.com/se-edu/addressbook-level4/blob/master/docs/UserGuide.md#222-past-deadline-indication)
 * Other major contributions:
