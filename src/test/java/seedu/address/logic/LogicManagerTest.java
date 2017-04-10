@@ -115,8 +115,8 @@ public class LogicManagerTest {
      * @see #assertCommandBehavior(boolean, String, String, ReadOnlyTaskManager, List)
      */
     private void assertCommandSuccess(String inputCommand, String expectedMessage,
-                                      ReadOnlyTaskManager expectedAddressBook,
-                                      List<? extends ReadOnlyTask> expectedShownList) {
+            ReadOnlyTaskManager expectedAddressBook,
+            List<? extends ReadOnlyTask> expectedShownList) {
         assertCommandBehavior(false, inputCommand, expectedMessage, expectedAddressBook, expectedShownList);
     }
 
@@ -149,8 +149,8 @@ public class LogicManagerTest {
      *      - {@code expectedAddressBook} was saved to the storage file. <br>
      */
     private void assertCommandBehavior(boolean isCommandExceptionExpected, String inputCommand, String expectedMessage,
-                                       ReadOnlyTaskManager expectedAddressBook,
-                                       List<? extends ReadOnlyTask> expectedShownList) {
+            ReadOnlyTaskManager expectedAddressBook,
+            List<? extends ReadOnlyTask> expectedShownList) {
 
         try {
             CommandResult result = logic.execute(inputCommand);
@@ -173,7 +173,9 @@ public class LogicManagerTest {
      * Executes the command, confirms that the result message is correct
      * and that a CommandException is thrown if expected
      */
-    private void assertCommandBehavior(boolean isCommandExceptionExpected, String inputCommand, String expectedMessage) {
+    private void assertCommandBehavior(boolean isCommandExceptionExpected,
+            String inputCommand,
+            String expectedMessage) {
 
         try {
             CommandResult result = logic.execute(inputCommand);
@@ -469,7 +471,7 @@ public class LogicManagerTest {
                     new EndDate("0" + Math.abs(seed) + ".0" + Math.abs(seed)),
                     new Group("list of " + seed),
                     new UniqueTagList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1)))
-            );
+                    );
         }
 
         //@@author A0164032U
@@ -599,7 +601,7 @@ public class LogicManagerTest {
                     new EndDate("12.11"),
                     new Group("list of 1"),
                     new UniqueTagList(new Tag("tag"))
-            );
+                    );
         }
     }
 }
