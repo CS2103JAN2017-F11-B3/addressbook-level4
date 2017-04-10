@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.testutil.EventsCollector;
-import seedu.address.testutil.TypicalTestPersons;
 import seedu.task.commons.events.model.TaskManagerChangedEvent;
 import seedu.task.commons.events.storage.DataSavingExceptionEvent;
 import seedu.task.model.ReadOnlyTaskManager;
@@ -55,19 +54,6 @@ public class StorageManagerTest {
         storageManager.saveUserPrefs(original);
         UserPrefs retrieved = storageManager.readUserPrefs().get();
         assertEquals(original, retrieved);
-    }
-
-    @Test
-    public void addressBookReadSave() throws Exception {
-        /*
-         * Note: This is an integration test that verifies the StorageManager is properly wired to the
-         * {@link XmlAddressBookStorage} class.
-         * More extensive testing of UserPref saving/reading is done in {@link XmlAddressBookStorageTest} class.
-         */
-        YTomorrow original = new TypicalTestPersons().getTypicalAddressBook();
-        storageManager.saveAddressBook(original);
-        ReadOnlyTaskManager retrieved = storageManager.readTaskManager().get();
-        assertEquals(original, new YTomorrow(retrieved));
     }
 
     @Test
