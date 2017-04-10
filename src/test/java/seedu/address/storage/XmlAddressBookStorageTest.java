@@ -13,7 +13,7 @@ import seedu.task.commons.exceptions.DataConversionException;
 import seedu.task.commons.util.FileUtil;
 import seedu.task.model.ReadOnlyTaskManager;
 import seedu.task.model.YTomorrow;
-import seedu.task.storage.XmlAddressBookStorage;
+import seedu.task.storage.XmlTaskManagerStorage;
 
 public class XmlAddressBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlAddressBookStorageTest/");
