@@ -13,15 +13,15 @@ public class HelpWindowTest extends AddressBookGuiTest {
     public void openHelpWindow() {
         //use accelerator
 
-    	// Help window will not open if click on TextField
+        //Help window will not open if click on TextField
         commandBox.clickOnTextField();
         assertHelpWindowNotOpen(mainMenu.openHelpWindowUsingAccelerator());
 
-        // Help window will not open if click on TextArea
+        //Help window will not open if click on TextArea
         resultDisplay.clickOnTextArea();
         assertHelpWindowNotOpen(mainMenu.openHelpWindowUsingAccelerator());
 
-        // Help window will not open if click on List View
+        //Help window will not open if click on List View
         personListPanel.clickOnListView();
         assertHelpWindowNotOpen(mainMenu.openHelpWindowUsingAccelerator());
 

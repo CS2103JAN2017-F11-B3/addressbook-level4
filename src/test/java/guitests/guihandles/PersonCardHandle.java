@@ -47,7 +47,7 @@ public class PersonCardHandle extends GuiHandle {
         String start = parts[0]; //Starts:
         String date = parts[1]; //01.01
         return date;
-     }
+    }
 
     //@@author A0164889E
     public String getEndDate() {
@@ -56,7 +56,7 @@ public class PersonCardHandle extends GuiHandle {
         String end = parts[0]; //ends:
         String date = parts[1]; //01.01
         return date;
-     }
+    }
 
     public List<String> getTags() {
         return getTags(getTagsContainer());
@@ -87,7 +87,7 @@ public class PersonCardHandle extends GuiHandle {
                 && getStartDate().equals(person.getStartDate().getInputValue())
                 && getEndDate().equals(person.getEndDate().getInputValue())
                 && getGroup().equals(person.getGroup().value);
-                //&& getTags().equals(getTags(person.getTags()));
+        //&& getTags().equals(getTags(person.getTags()));
     }
 
     @Override
@@ -98,7 +98,7 @@ public class PersonCardHandle extends GuiHandle {
                     && getStartDate().equals(handle.getStartDate())
                     && getEndDate().equals(handle.getEndDate())
                     && getGroup().equals(handle.getGroup());
-                    //&& getTags().equals(handle.getTags());
+            //&& getTags().equals(handle.getTags());
         }
         return super.equals(obj);
     }
