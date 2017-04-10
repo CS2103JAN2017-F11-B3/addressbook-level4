@@ -1,6 +1,6 @@
 package seedu.task.model.task;
 
-import java.util.Collection;
+
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -9,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.task.commons.core.UnmodifiableObservableList;
 import seedu.task.commons.exceptions.DuplicateDataException;
-import seedu.task.commons.util.CollectionUtil;
 
 /**
  * A list of tasks that enforces uniqueness between its elements and does not allow nulls.
@@ -17,7 +16,6 @@ import seedu.task.commons.util.CollectionUtil;
  * Supports a minimal set of list operations.
  *
  * @see Task#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniqueTaskList implements Iterable<Task> {
 
