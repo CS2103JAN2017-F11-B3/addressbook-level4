@@ -52,7 +52,7 @@ public class AddressBookTest {
         TypicalTestPersons td = new TypicalTestPersons();
         // Repeat td.alice twice
         List<Task> newPersons = Arrays.asList(new Task(td.alice), new Task(td.alice));
-        List<Tag> newTags = td.alice.getTags().asObservableList();
+        List<Tag> newTags = td.alice.getTagsDirect().asObservableList();
         AddressBookStub newData = new AddressBookStub(newPersons, newTags);
 
         thrown.expect(AssertionError.class);
