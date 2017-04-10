@@ -31,15 +31,6 @@ public interface ReadOnlyTask {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName())
-                && ((other.getStartDate() == null && this.getStartDate() == null)
-                        || ((other.getStartDate() != null && this.getStartDate() != null)
-                                && other.getStartDate().equals(this.getStartDate())))
-                && ((other.getEndDate() == null && this.getEndDate() == null)
-                        || ((other.getEndDate() != null && this.getEndDate() != null)
-                                && other.getEndDate().equals(this.getEndDate())))
-                && ((other.getGroup() == null && this.getGroup() == null)
-                        || ((other.getGroup() != null && this.getGroup() != null)
-                                && other.getGroup().equals(this.getGroup())))
                 );
     }
 
