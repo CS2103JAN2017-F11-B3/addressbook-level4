@@ -178,9 +178,14 @@ public class Task implements ReadOnlyTask {
         if (CollectionUtil.isAnyNull(name, group, tags)) {
             throw new IllegalValueException(FACTORY_ERROR_NULL);
         }
+        
 
         //@@author A0164466X
         if (start != null && end != null) {
+        	//@@author A0164032U
+            if (end.getTime().compareTo(start.getTime()) < 0)
+            	return null;
+            //@@author
             return new Task(name, start, end, group, tags);
         } else if (start == null && end != null) {
             return new DeadlineTask(name, end, group, tags);
