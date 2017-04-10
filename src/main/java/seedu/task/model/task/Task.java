@@ -22,11 +22,9 @@ public class Task implements ReadOnlyTask {
     /**
      * Every field must be present and not null.
      */
-
-
     public Task(Name name, StartDate start, EndDate end, Group group, UniqueTagList tags) {
 
-        assert !CollectionUtil.isAnyNull(name, start, end, group, tags);
+        //assert !CollectionUtil.isAnyNull(name, start, end, group, tags);
         this.name = name;
         this.start = start;
         this.end = end;
@@ -38,11 +36,11 @@ public class Task implements ReadOnlyTask {
     /**
      * Creates a copy of the given ReadOnlyTask.
      */
-
     public Task(ReadOnlyTask source) {
         this(
             source.getName(),
             source.getStartDate(),
+
             source.getEndDate(),
             source.getGroup(),
             source.getTags());
@@ -92,6 +90,12 @@ public class Task implements ReadOnlyTask {
     @Override
     public UniqueTagList getTags() {
         return new UniqueTagList(tags);
+    }
+
+    //@@author A0164889E
+    @Override
+    public UniqueTagList getTagsDirect() {
+        return tags;
     }
 
     /**
@@ -155,6 +159,8 @@ public class Task implements ReadOnlyTask {
         return getEndTime().compareTo(o.getEndTime());
     }
 
+    private static final String FACTORY_ERROR_NULL =
+            "Task Factory: new task requires a name, group, and tag list.";
     //@@author A0163848R
     /**
      * Factory method to build a Task or Task-inheriting class from a given unordered array of properties.
@@ -170,9 +176,10 @@ public class Task implements ReadOnlyTask {
         EndDate end = CollectionUtil.firstOf(properties, EndDate.class);
 
         if (CollectionUtil.isAnyNull(name, group, tags)) {
-            throw new IllegalValueException("Task Factory: new task requires a name, group, and tag list");
+            throw new IllegalValueException(FACTORY_ERROR_NULL);
         }
 
+        //@@author A0164466X
         if (start != null && end != null) {
             return new Task(name, start, end, group, tags);
         } else if (start == null && end != null) {
@@ -180,7 +187,9 @@ public class Task implements ReadOnlyTask {
         } else if (start == null && end == null) {
             return new FloatingTask(name, group, tags);
         }
+        //@@author
 
+        //@@author A0163848R
         return null;
     }
 

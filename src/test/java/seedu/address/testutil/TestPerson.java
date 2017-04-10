@@ -33,7 +33,7 @@ public class TestPerson implements ReadOnlyTask {
         this.start = personToCopy.getStartDate();
         this.end = personToCopy.getEndDate();
         this.group = personToCopy.getGroup();
-        this.tags = personToCopy.getTags();
+        this.tags = personToCopy.getTagsDirect();
     }
 
     public void setName(Name name) {
@@ -82,6 +82,12 @@ public class TestPerson implements ReadOnlyTask {
     @Override
     public UniqueTagList getTags() {
         return new UniqueTagList(tags);
+    }
+
+    //@@author A0164889E
+    @Override
+    public UniqueTagList getTagsDirect() {
+        return tags;
     }
 
     @Override
