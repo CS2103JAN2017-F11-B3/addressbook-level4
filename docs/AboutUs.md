@@ -9,8 +9,15 @@ We are a team based in the [School of Computing, National University of Singapor
 Roles and Responsibilities: In charge of GUI, JavaFX Expert <br>
 * Components in charge of: [UI]()
 * Aspects/tools in charge of:
-* Other major contributions:
 * Features implemented:
+  * [Distinguish three kinds of tasks](https://github.com/CS2103JAN2017-F11-B3/main/blob/master/docs/DeveloperGuide.md#24-model-component)
+  * [Sort task list by ascending deadline time](https://github.com/CS2103JAN2017-F11-B3/main/blob/master/docs/UserGuide.md#24-listing-all-tasks--list)
+  * [Distinguish error message and normal message](https://github.com/CS2103JAN2017-F11-B3/main/commit/10fe1da23dd104ab3c821e3336e722b4d08c816f)
+* Other major contributions:
+  * In charge of UI fixing, make the connection between Ui and model
+  * In charge of part of the documentation and all the structrue diagrams
+  * Implement GUI testing, create test case of Group Command
+  * Implement model testing, create test case of DateTest and GroupTest
 
 -----
 
