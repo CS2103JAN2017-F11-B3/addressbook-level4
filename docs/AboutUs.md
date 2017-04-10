@@ -26,9 +26,14 @@ Roles and Responsibilities: In charge of GUI, JavaFX Expert <br>
 Roles and Responsibilities: In charge of Logic and Testing, JUnit Expert, CRUD Pathfinder<br>
 * Components in charge of: [Logic]()
 * Aspects/tools in charge of:
-* Other major contributions:
 * Features implemented:
-
+   * [Undo/Redo commands](https://github.com/se-edu/addressbook-level4/blob/master/docs/UserGuide.md#185-seperate-different-groups--group)
+   * [complete list](https://github.com/CS2103JAN2017-F11-B3/main/commits/completeList)
+* Other major contributions:
+   * In charge of testing. (fixing the bugs and adjusting the tests to fit the project)
+   * In charge of code cleanup. (passing checkstyle test)
+   * making complete list on another panel. 
+    
 -----
 
 #### [Malik Jabati](https://github.com/SmartyMJ)
