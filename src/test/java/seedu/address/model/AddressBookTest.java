@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -53,19 +52,6 @@ public class AddressBookTest {
         // Repeat td.alice twice
         List<Task> newPersons = Arrays.asList(new Task(td.alice), new Task(td.alice));
         List<Tag> newTags = td.alice.getTags().asObservableList();
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
-
-        thrown.expect(AssertionError.class);
-        addressBook.resetData(newData);
-    }
-
-    @Test
-    public void resetData_withDuplicateTags_throwsAssertionError() {
-        YTomorrow typicalAddressBook = new TypicalTestPersons().getTypicalAddressBook();
-        List<ReadOnlyTask> newPersons = typicalAddressBook.getTaskList();
-        List<Tag> newTags = new ArrayList<>(typicalAddressBook.getTagList());
-        // Repeat the first tag twice
-        newTags.add(newTags.get(0));
         AddressBookStub newData = new AddressBookStub(newPersons, newTags);
 
         thrown.expect(AssertionError.class);

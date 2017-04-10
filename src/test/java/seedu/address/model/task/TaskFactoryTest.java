@@ -20,11 +20,9 @@ import seedu.task.model.task.Task;
 public class TaskFactoryTest {
 
     @Test
-    public void isValidTask() {
-
+    public void validTask() {
         Object task = null;
 
-        // Test: Is Task
         try {
             task = Task.factory(
                     new Name("Go to the beach"),
@@ -35,8 +33,11 @@ public class TaskFactoryTest {
         } catch (IllegalValueException e) {
         }
         assertTrue(task instanceof Task);
+    }
 
-        // Test: No end date
+    @Test
+    public void noEndDate() {
+        Object task = null;
         try {
             task = Task.factory(
                     new Name("Go to the beach"),
@@ -46,10 +47,12 @@ public class TaskFactoryTest {
         } catch (IllegalValueException e) {
         }
         assertTrue(task == null);
+    }
 
-        // Test: without required field (UniqueTagList)
+    @Test
+    public void withoutRequiredField() {
         try {
-            task = Task.factory(
+            Task.factory(
                     new Name("Go to the beach"),
                     new Group("Vacation"),
                     new StartDate("today"),
