@@ -3,7 +3,7 @@ package guitests;
 import org.junit.Test;
 
 import seedu.address.testutil.TestPerson;
-//@@author A0164032U
+//@@author A0164032U-unused
 public class GroupCommandTest extends AddressBookGuiTest {
 
     @Test
