@@ -156,12 +156,12 @@ Format: `clear [KEYWORD]`
 
 Examples:
 
-* `clear`<br>
-  Clear all tasks.
-* `clear all`, <br>
-  `clear incomplete`, <br>
-  `clear complete`<br>
-  Clear all completed tasks.
+* `group learning`<br>
+  `delete 2`<br>
+  Deletes the 2nd task within group learning.
+* `group fun`<br>
+  `find water`<br>
+  find the tasks with water in group fun.
 
 ### 2.12. Finding all tasks containing keyword in their task name: `find`
 
@@ -181,6 +181,20 @@ Examples:
   Returns `John Doe` and `john`
 * `find Betsy Tim John`<br>
   Returns Any person having names `Betsy`, `Tim`, or `John`
+  
+### 2.11. seperate different groups : `group`
+
+list all the tasks within certain groups. <br>
+Format: `group [KEYWORD]`
+
+Examples:
+
+* `group`<br>
+  Clear all tasks.
+* `clear all`, <br>
+  `clear incomplete`, <br>
+  `clear complete`<br>
+  Clear all completed tasks.
 
 ### 2.13. Undo : `undo`
 
