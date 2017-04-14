@@ -10,7 +10,7 @@ import seedu.task.commons.core.Messages;
 public class FindCommandTest extends AddressBookGuiTest {
 
     @Test
-    public void find_nonEmptyList() {
+    public void findNonEmptyList() {
         assertFindResult("find Mark"); // no results
         assertFindResult("find Meier", td.benson, td.daniel); // multiple results
 
@@ -20,13 +20,13 @@ public class FindCommandTest extends AddressBookGuiTest {
     }
 
     @Test
-    public void find_emptyList() {
+    public void findEmptyList() {
         commandBox.runCommand("clear all");
         assertFindResult("find Jean"); // no results
     }
 
     @Test
-    public void find_invalidCommand_fail() {
+    public void findInvalidCommand_fail() {
         commandBox.runCommand("findgeorge");
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
     }
