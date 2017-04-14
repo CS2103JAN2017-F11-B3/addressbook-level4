@@ -19,7 +19,7 @@ public class EditCommandTest extends AddressBookGuiTest {
 
     // The list of task in the person list panel is expected to match this list.
     // This list is updated with every successful call to assertEditSuccess().
-    TestPerson[] expectedPersonsList = td.getTypicalPersons();
+    private TestPerson[] expectedPersonsList = td.getTypicalPersons();
 
     @Test
     public void editAllFieldsSpecifiedSuccess() throws Exception {
