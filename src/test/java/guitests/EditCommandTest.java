@@ -22,7 +22,7 @@ public class EditCommandTest extends AddressBookGuiTest {
     TestPerson[] expectedPersonsList = td.getTypicalPersons();
 
     @Test
-    public void edit_allFieldsSpecified_success() throws Exception {
+    public void editAllFieldsSpecifiedSuccess() throws Exception {
         int addressBookIndex = 1;
         //@@author A0164889E
         String detailsToEdit = "Bobby s/01/01 00:00 d/01/01 00:00 g/project";
@@ -38,7 +38,7 @@ public class EditCommandTest extends AddressBookGuiTest {
     }
     //@@author A0164032U
     @Test
-    public void edit_notAllFieldsSpecified_success() throws Exception {
+    public void editNotAllFieldsSpecifiedSuccess() throws Exception {
         String detailsToEdit = "g/examination";
         int addressBookIndex = 2;
 
@@ -50,7 +50,7 @@ public class EditCommandTest extends AddressBookGuiTest {
     //@@author
 
     @Test
-    public void edit_findThenEdit_success() throws Exception {
+    public void editFindThenEditSuccess() throws Exception {
         commandBox.runCommand("find Elle");
 
         String detailsToEdit = "Belle";
@@ -64,25 +64,25 @@ public class EditCommandTest extends AddressBookGuiTest {
     }
 
     @Test
-    public void edit_missingPersonIndex_failure() {
+    public void editMissingPersonIndexFailure() {
         commandBox.runCommand("edit Bobby");
         assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void edit_invalidPersonIndex_failure() {
+    public void editInvalidPersonIndexFailure() {
         commandBox.runCommand("edit 8 Bobby");
         assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
     @Test
-    public void edit_noFieldsSpecified_failure() {
+    public void editNoFieldsSpecifiedFailure() {
         commandBox.runCommand("edit 1");
         assertResultMessage(EditCommand.MESSAGE_NOT_EDITED);
     }
     //@@author A0164032U
     @Test
-    public void edit_invalidValues_failure() {
+    public void editInvalidValuesFailure() {
         commandBox.runCommand("edit 1 *&");
         assertResultMessage(Name.MESSAGE_NAME_CONSTRAINTS);
 
@@ -98,7 +98,7 @@ public class EditCommandTest extends AddressBookGuiTest {
     }
 
     @Test
-    public void edit_duplicatePerson_failure() {
+    public void editDuplicatePersonFailure() {
         //@@author A0164889E
         commandBox.runCommand("edit 3 Alice Paul s/01/01 00:00 d/12/12 00:00 "
                                 + "g/group1");
