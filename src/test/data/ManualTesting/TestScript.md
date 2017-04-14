@@ -46,14 +46,20 @@
     * Name, start date, end date, and group tag should update to reflect your changes
 24. Type "undo"</br>
     * Task 7 should be reset to previous values
-25. Type "help"</br>
+25. Type "group family"</br>
+    * Tasks with a tag of "Family" should display
+26. Type "list"</br>
+    * All tasks should be listed
+27. Type "help"</br>
     * Help page should appear
-26. Press ENTER</br>
+28. Press ENTER</br>
     * Help page should close
-27. Type "clear complete"</br>
+29. Type "clear complete"</br>
     * All complete tasks should clear
-28. Type "add old task from jan 1 2016"
+30. Type "add old task to jan 1 2016"
     * Task block should appear filled in red (meaning task end date has passed).
-29. Type "clear passed"
+31. Type "clear passed"
     * Tasks with an end date in the past should be cleared.
-30. Close the program.
+32. Press CTRL+E and choose a location to save the exported file</br>
+    * File should be exported
+33. Close the program.
