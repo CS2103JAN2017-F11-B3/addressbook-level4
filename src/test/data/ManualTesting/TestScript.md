@@ -9,7 +9,7 @@
 5. Type "add work out from saturday"</br>
     * Error should appear. If a task has a start date, it needs an end date.
 6. Type "add float in the pool in pool activities"</br>
-    * Task should appear with no end date or start date, but with pool activites as a group tag.
+    * Task should appear with no end date or start date, but with pool activities as a group tag.
 7. Type "clear all"</br>
     * List should clear.
 8. Type "undo"</br>
